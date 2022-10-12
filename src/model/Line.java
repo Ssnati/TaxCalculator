@@ -13,42 +13,42 @@ public class Line {
         modelList = new ArrayList<>();
     }
 
-    public String getModelList() {
-        String auxList ="";
+    public List<String> getModelList() {
+        List<String> modelListAux = new ArrayList<>();
         for (Model model : modelList) {
-            auxList += "\n-: " + model.getModelNumber();
+            modelListAux.add(model.getModelNumber()+"");
         }
-        return auxList;
+        return modelListAux;
     }
 
     public String getNameLine() {
         return nameLine;
     }
 
-    public void setModelList(List<Model> modelList) {
-        this.modelList = modelList;
-    }
-
-    public void setNameLine(String nameLine) {
-        this.nameLine = nameLine;
-    }
-
-    public void addModel(Model model){
-        modelList.add(model);
-    }
-
     public Model searchModel(int modelNumber) {
         Model modelAux = null;
         for (Model model : modelList) {
-            if (model.getModelNumber()==modelNumber) {
+            if (model.getModelNumber() == modelNumber) {
                 modelAux = model;
             }
         }
         if (modelAux == null) {
-            Model newModel = new Model(modelNumber, 0, 0);
+            Model newModel = new Model(modelNumber, 0);
             modelList.add(newModel);
             modelAux = newModel;
         }
         return modelAux;
+    }
+
+    public void sortModelList() {
+        for (int i = 0; i < modelList.size(); i++) {
+            for (int j = 0; j < modelList.size() - 1; j++) {
+                if (modelList.get(j).getModelNumber() > modelList.get(j + 1).getModelNumber()) {
+                    Model aux = modelList.get(j);
+                    modelList.set(j, modelList.get(j + 1));
+                    modelList.set(j + 1, aux);
+                }
+            }
+        }
     }
 }

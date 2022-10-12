@@ -12,29 +12,18 @@ public class Mark {
         lineList =  new ArrayList<>();
     }
 
-    public String getLineList() {
-        String auxList = "";
-        for (Line line: lineList) {
-            auxList += "\n-: " + line.getNameLine();
+    public List<String> getLineList() {
+        List<String> lineListAux = new ArrayList<>();
+        for (Line line : lineList) {
+            lineListAux.add(line.getNameLine());
         }
-        return auxList;
+        return lineListAux;
     }
 
     public String getMarkName() {
         return markName;
     }
 
-    public void setLineList(List<Line> lineList) {
-        this.lineList = lineList;
-    }
-
-    public void setMarkName(String markName) {
-        this.markName = markName;
-    }
-
-    public void addLine(Line line) {
-        lineList.add(line);
-    }
     public Line searchLine(String nameLine) {
         Line lineAux = null;
         for (Line line : lineList) {
@@ -50,6 +39,23 @@ public class Mark {
         }
         return lineAux;
     }
+    public void sortLineList() {
+        for (int i = 0; i < lineList.size(); i++) {
+            for (int j = 0; j < lineList.size() - 1; j++) {
+                if (lineList.get(j).getNameLine().compareTo(lineList.get(j + 1).getNameLine()) > 0) {
+                    Line aux = lineList.get(j);
+                    lineList.set(j, lineList.get(j + 1));
+                    lineList.set(j + 1, aux);
+                }
+            }
+        }
+        sortModelList();
+    }
 
+    public void sortModelList() {
+        for (Line line : lineList) {
+            line.sortModelList();
+        }
+    }
 }
 

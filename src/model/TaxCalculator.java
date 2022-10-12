@@ -12,6 +12,7 @@ public class TaxCalculator {
         markList = new ArrayList<>();
         rankList = new RankList();
         loadData();
+        sortMarkList();
     }
 
     public void loadData() throws IOException{
@@ -23,14 +24,12 @@ public class TaxCalculator {
             String[] splits = (data.split(","));
             String mark = splits[1];
             String line = splits[5];
-
             String[] modelAndValue = locateModel(splits, firstLine);//Obtiene el modelo y su valor, si no es 0
-            int idService = Integer.parseInt(splits[9]);
             for (String separator : modelAndValue) {
                 String[] modelsWithValue = separator.split(",");
                 int model = Integer.parseInt(modelsWithValue[0]);
                 double value = Double.parseDouble(modelsWithValue[1]) * 1000;
-                generateObject(mark, line, model, value, idService);
+                generateObject(mark, line, model, value);
             }
 
         }
@@ -47,25 +46,16 @@ public class TaxCalculator {
         return modelAndValue.toArray(new String[0]);
     }
 
-    public void generateObject(String mark, String line, int model, double value, int idService) {
+    public void generateObject(String mark, String line, int model, double value) {
         searchMark(mark).searchLine(line).searchModel(model).setCommercialValue(value);
-        searchMark(mark).searchLine(line).searchModel(model).setIdService(idService);
     }
 
-    public String getMarkList() {
-        String auxList = "";
+    public List<String> getMarkList() {
+        List<String> auxList = new ArrayList<>();
         for (Mark mark : markList) {
-            auxList += "\n-: " + mark.getMarkName();
+            auxList.add(mark.getMarkName());
         }
         return auxList;
-    }
-
-    public void addMark(Mark mark) {
-        markList.add(mark);
-    }
-
-    public void modifyRank(String propertyName, String value) throws IOException {
-        rankList.changeValue(propertyName, value);
     }
 
     public Mark searchMark(String markName) {
@@ -87,27 +77,20 @@ public class TaxCalculator {
         return searchMark(mark).searchLine(line).searchModel(model).getCommercialValue();
     }
 
-    public double calculateTotalValue(String mark, int model, String line, int timely, int boyaca) {
+    public double calculateTotalValue(String mark, int model, String line, boolean isTimely, boolean isPublic,  boolean inBoyaca) {
         double initialValue = getValue(mark, line, model);
         initialValue = calculateTaxWithRank(initialValue);
-        if (timely == 1) {
-            initialValue = generateTimelyDiscount(initialValue);
-        }
-        if (isPublic(mark, line, model)) {
-            initialValue = generatePublicDiscount(initialValue);
-        }
-        if (boyaca == 1) {
-            initialValue = generateBoyacaDiscount(initialValue);
-        }
+        //            System.out.println("Descuento por pago oportuno: " + initialValue);
+        if (isTimely) initialValue = generateTimelyDiscount(initialValue);
+        //            System.out.println("Descuento por vehiculo publico: " + initialValue);
+        if (isPublic) initialValue = generatePublicDiscount(initialValue);
+        //            System.out.println("Descuento por vehiculo en Boyaca: " + initialValue);
+        if (inBoyaca) initialValue = generateBoyacaDiscount(initialValue);
         return initialValue;
     }
 
-    public boolean isPublic(String mark, String line, int model) {
-        return searchMark(mark).searchLine(line).searchModel(model).getIdService() == 2;
-    }
-
     private double generateTimelyDiscount(double value) {
-        return value - (value * (rankList.getTimelyPaymentDiscount() / 100));
+        return value - (value * (rankList.getTimelyPaymentDiscount())/100);
     }
 
     private double generatePublicDiscount(double value) {
@@ -115,7 +98,7 @@ public class TaxCalculator {
     }
 
     private double generateBoyacaDiscount(double value) {
-        return value - (value * (rankList.getRegisteredInBoyacaDiscount() / 100));
+        return value - (value * (rankList.getRegisteredInBoyacaDiscount())/100);
     }
 
     private double calculateTaxWithRank(double commercialValue) {
@@ -130,4 +113,22 @@ public class TaxCalculator {
         return value;
     }
 
+    public void sortMarkList() {
+        for (int i = 0; i < markList.size() - 1; i++) {
+            for (int j = 0; j < markList.size() - 1; j++) {
+                if (markList.get(j).getMarkName().compareTo(markList.get(j + 1).getMarkName()) > 0) {
+                    Mark aux = markList.get(j);
+                    markList.set(j, markList.get(j + 1));
+                    markList.set(j + 1, aux);
+                }
+            }
+        }
+        sortLineList();
+    }
+
+    public void sortLineList() {
+        for (Mark mark : markList) {
+            mark.sortLineList();
+        }
+    }
 }

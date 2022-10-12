@@ -4,12 +4,10 @@ public class Model {
 
     private int modelNumber;
     private double commercialValue;
-    private int idService;
 
-    public Model(int modelNumber, double commercialValue, int idService) {
+    public Model(int modelNumber, double commercialValue) {
         this.modelNumber = modelNumber;
         this.commercialValue = commercialValue;
-        this.idService = idService;
     }
 
     public double getCommercialValue() {
@@ -22,13 +20,5 @@ public class Model {
 
     public void setCommercialValue(double commercialValue) {
         this.commercialValue = commercialValue;
-    }
-
-    public int getIdService() {
-        return idService;
-    }
-
-    public void setIdService(int idService) {
-        this.idService = idService;
     }
 }

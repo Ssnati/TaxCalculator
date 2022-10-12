@@ -10,7 +10,6 @@ import java.util.List;
 public class Persistence {
     private BufferedReader bufferedReader;
     private List<String> fileLine;
-    private String chain;
 
     public Persistence() throws FileNotFoundException {
         bufferedReader = new BufferedReader(new FileReader("persistence/Guia_CSV_298.csv"));
@@ -19,11 +18,11 @@ public class Persistence {
 
     public String[] getFirstLine() throws IOException {
         String propertyName = bufferedReader.readLine();
-        String[] firstLine = propertyName.split(",");
-        return firstLine;
+        return propertyName.split(",");
     }
 
     public List<String> getChain() throws IOException {
+        String chain;
         while ((chain = bufferedReader.readLine()) != null) {
             fileLine.add(chain);
         }
@@ -36,13 +35,13 @@ public class Persistence {
         for (String line : listToRemove) {
             char[] a = line.toCharArray();
             String b = "";
-            for (int i = 0; i <a.length; i++) {
-                if ((byte)a[i]!=34){
-                    b+=a[i];
+            for (char c : a) {
+                if ((byte) c != 34) {
+                    b += c;
                 }
             }
             auxList.add(b);
-            }
+        }
         return auxList;
     }
 

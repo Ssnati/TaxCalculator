@@ -28,11 +28,6 @@ class RankList {
         this.maximunValue = Integer.parseInt(p.getProperty("maxim"));
     }
 
-    public void changeValue(String propertyName, String value) throws FileNotFoundException, IOException {
-        p.setProperty(propertyName, value);
-        p.store(new PrintWriter("src/main/java/resources/config.properties"), "");
-    }
-
     public double getFirsRankDiscount() {
         return firsRankDiscount;
     }
