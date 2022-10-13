@@ -87,11 +87,8 @@ public class TaxCalculator {
     public double calculateTotalValue(String mark, int model, String line, boolean isTimely, boolean isPublic,  boolean inBoyaca) {
         double initialValue = getValue(mark, line, model);
         initialValue = calculateTaxWithRank(initialValue);
-        //            System.out.println("Descuento por pago oportuno: " + initialValue);
         if (isTimely) initialValue = generateTimelyDiscount(initialValue);
-        //            System.out.println("Descuento por vehiculo publico: " + initialValue);
         if (isPublic) initialValue = generatePublicDiscount(initialValue);
-        //            System.out.println("Descuento por vehiculo en Boyaca: " + initialValue);
         if (inBoyaca) initialValue = generateBoyacaDiscount(initialValue);
         return initialValue;
     }

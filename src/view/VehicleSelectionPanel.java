@@ -77,12 +77,6 @@ public class VehicleSelectionPanel extends JPanel {
         for (String line : lines) {
             lineComboBox.addItem(line);
         }
-        System.out.println("Numero de items en las Lineas: "+lineComboBox.getItemCount());
-    }
-
-    public void clearLineComboBox() {
-        lineComboBox.removeAllItems();
-        lineComboBox.addItem("Seleccionar linea");
     }
 
     public List<String> getListLineItems(){
@@ -122,6 +116,16 @@ public class VehicleSelectionPanel extends JPanel {
 
     public String getItemModelComboBox() {
         return String.valueOf(modelComboBox.getSelectedItem());
+    }
+
+    public void clearMarkComboBox() {
+        markComboBox.removeAllItems();
+        markComboBox.addItem("Seleccionar marca");
+    }
+
+    public void clearLineComboBox() {
+        lineComboBox.removeAllItems();
+        lineComboBox.addItem("Seleccionar linea");
     }
 
     public void clearModelComboBox(){

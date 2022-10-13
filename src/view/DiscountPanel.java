@@ -52,4 +52,10 @@ public class DiscountPanel extends JPanel {
         add(labelRegistrationInBoyaca);
         add(checkRegistrationInBoyaca);
     }
+
+    public void clearAllCheckBoxes() {
+        checkTimelyPayment.setSelected(false);
+        checkVehicleType.setSelected(false);
+        checkRegistrationInBoyaca.setSelected(false);
+    }
 }

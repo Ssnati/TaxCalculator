@@ -70,12 +70,20 @@ public class View extends JFrame {
         firstPanel.setModelComboBox(models);
     }
 
+    public void clearMarks() {
+        firstPanel.clearMarkComboBox();
+    }
+
     public void clearLines() {
         firstPanel.clearLineComboBox();
     }
 
     public void clearModels() {
         firstPanel.clearModelComboBox();
+    }
+
+    public void clearAllCheckBoxes() {
+        secondPanel.clearAllCheckBoxes();
     }
 
     public boolean isTimelyPaymentSelected(){

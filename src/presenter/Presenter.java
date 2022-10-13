@@ -44,17 +44,23 @@ public class Presenter implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent event) {
         String eventAction = event.getActionCommand();
+        String mark = view.getMarkItem();
         switch (eventAction) {
             case "markComboBox":
-                view.clearLines();
-                view.setLineComboBox(taxCalculator.searchMark(view.getMarkItem()).getLineList());
+                if(!mark.equals("Seleccionar marca")&&!(mark.equals("null"))) {
+                    view.clearLines();
+                    view.setLineComboBox(taxCalculator.searchMark(view.getMarkItem()).getLineList());
+                }
                 break;
             case "lineComboBox":
-                List<String> lineChecker = taxCalculator.searchMark(view.getMarkItem()).getLineList();
-                lineChecker.add(0, "Seleccione una linea");
-                if (areEquals(lineChecker, view.getLineList())) {
-                    view.clearModels();
-                    view.setModelComboBox(taxCalculator.searchMark(view.getMarkItem()).searchLine(view.getLineItem()).getModelList());
+                mark = view.getMarkItem();
+                if ((!mark.equals("Seleccionar marca"))) {
+                    List<String> lineChecker = taxCalculator.searchMark(mark).getLineList();
+                    lineChecker.add(0, "Seleccionar linea");
+                    if (areEquals(lineChecker, view.getLineList())) {
+                        view.clearModels();
+                        view.setModelComboBox(taxCalculator.searchMark(view.getMarkItem()).searchLine(view.getLineItem()).getModelList());
+                    }
                 }
                 break;
             case "searchButton":
@@ -65,6 +71,15 @@ public class Presenter implements ActionListener {
                 double finalValue = taxCalculator.calculateTotalValue(view.getMarkItem(), view.getModelItem(), view.getLineItem(), view.isTimelyPaymentSelected(), view.isVehicleTypeSelected(), view.isRegistrationInBoyacaSelected());
                 view.setTaxValue(String.valueOf(finalValue));
                 break;
+                case "cleanButton":
+                    view.setLabelValue("0");
+                    view.setTaxValue("0");
+                    view.clearMarks();
+                    view.clearModels();
+                    view.clearLines();
+                    view.clearAllCheckBoxes();
+                    view.setMarkComboBox(taxCalculator.getMarkList());
+                    break;
             default:
                 break;
         }
