@@ -35,15 +35,19 @@ public class View extends JFrame {
     }
 
     public String getMarkItem(){
-        return firstPanel.getMarkComboBox();
+        return firstPanel.getItemMarkComboBox();
     }
 
     public String getLineItem() {
-        return firstPanel.getLineComboBox();
+        return firstPanel.getItemLineComboBox();
+    }
+
+    public List<String> getLineList() {
+        return firstPanel.getListLineItems();
     }
 
     public int getModelItem() {
-        return Integer.parseInt(firstPanel.getModelComboBox());
+        return Integer.parseInt(firstPanel.getItemModelComboBox());
     }
 
     public void setLabelValue(String value){
@@ -66,6 +70,10 @@ public class View extends JFrame {
         firstPanel.setModelComboBox(models);
     }
 
+    public void clearLines() {
+        firstPanel.clearLineComboBox();
+    }
+
     public void clearModels() {
         firstPanel.clearModelComboBox();
     }
@@ -80,9 +88,5 @@ public class View extends JFrame {
 
     public boolean isRegistrationInBoyacaSelected(){
         return secondPanel.isRegistrationInBoyacaSelected();
-    }
-
-    public void clearLines() {
-        firstPanel.clearLineComboBox();
     }
 }

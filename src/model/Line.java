@@ -32,11 +32,6 @@ public class Line {
                 modelAux = model;
             }
         }
-        if (modelAux == null) {
-            Model newModel = new Model(modelNumber, 0);
-            modelList.add(newModel);
-            modelAux = newModel;
-        }
         return modelAux;
     }
 
@@ -49,6 +44,13 @@ public class Line {
                     modelList.set(j + 1, aux);
                 }
             }
+        }
+    }
+
+    public void addModel(int model, double value) {
+        Model modelAux = new Model(model, value);
+        if (searchModel(model) == null) {
+            modelList.add(modelAux);
         }
     }
 }

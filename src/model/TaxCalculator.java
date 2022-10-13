@@ -47,7 +47,9 @@ public class TaxCalculator {
     }
 
     public void generateObject(String mark, String line, int model, double value) {
-        searchMark(mark).searchLine(line).searchModel(model).setCommercialValue(value);
+        Mark markAux = addMark(mark);
+        Line lineAux = markAux.addLine(line);
+        lineAux.addModel(model, value);
     }
 
     public List<String> getMarkList() {
@@ -65,12 +67,17 @@ public class TaxCalculator {
                 markAux = mark;
             }
         }
-        if (markAux == null) {
-            Mark newMark = new Mark(markName);
-            markList.add(newMark);
-            markAux = newMark;
-        }
         return markAux;
+    }
+
+    public Mark addMark(String markName) {
+        Mark newMark = new Mark(markName);
+        if (searchMark(markName) == null) {
+            markList.add(newMark);
+        } else {
+            newMark = searchMark(markName);
+        }
+        return newMark;
     }
 
     public double getValue(String mark, String line, int model) {

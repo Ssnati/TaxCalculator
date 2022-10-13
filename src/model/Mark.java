@@ -8,7 +8,7 @@ public class Mark {
     private List<Line> lineList;
 
     public Mark(String markName) {
-        this.markName = markName;
+        this.markName = markName.toUpperCase();
         lineList =  new ArrayList<>();
     }
 
@@ -31,12 +31,6 @@ public class Mark {
                 lineAux = line;
             }
         }
-
-        if (lineAux == null) {
-            Line newLine = new Line(nameLine);
-            lineList.add(newLine);
-            lineAux = newLine;
-        }
         return lineAux;
     }
     public void sortLineList() {
@@ -56,6 +50,16 @@ public class Mark {
         for (Line line : lineList) {
             line.sortModelList();
         }
+    }
+
+    public Line addLine(String newLine) {
+        Line lineAux = new Line(newLine);
+        if (searchLine(newLine) == null) {
+            lineList.add(lineAux);
+        } else {
+            lineAux = searchLine(newLine);
+        }
+        return lineAux;
     }
 }
 

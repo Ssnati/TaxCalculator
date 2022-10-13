@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleSelectionPanel extends JPanel {
@@ -76,6 +77,21 @@ public class VehicleSelectionPanel extends JPanel {
         for (String line : lines) {
             lineComboBox.addItem(line);
         }
+        System.out.println("Numero de items en las Lineas: "+lineComboBox.getItemCount());
+    }
+
+    public void clearLineComboBox() {
+        lineComboBox.removeAllItems();
+        lineComboBox.addItem("Seleccionar linea");
+    }
+
+    public List<String> getListLineItems(){
+        List<String> lines = new ArrayList<>();
+        int count = lineComboBox.getItemCount();
+        for (int i = 0; i < count; i++) {
+            lines.add(lineComboBox.getItemAt(i));
+        }
+        return lines;
     }
 
     public void setModelComboBox(List<String> models){
@@ -96,21 +112,16 @@ public class VehicleSelectionPanel extends JPanel {
         add(searchButton);
     }
 
-    public String getMarkComboBox() {
+    public String getItemMarkComboBox() {
         return String.valueOf(markComboBox.getSelectedItem());
     }
 
-    public String getLineComboBox() {
+    public String getItemLineComboBox() {
         return String.valueOf(lineComboBox.getSelectedItem());
     }
 
-    public String getModelComboBox() {
+    public String getItemModelComboBox() {
         return String.valueOf(modelComboBox.getSelectedItem());
-    }
-
-    public void clearLineComboBox(){
-        lineComboBox.removeAllItems();
-        lineComboBox.addItem("Seleccionar linea");
     }
 
     public void clearModelComboBox(){
