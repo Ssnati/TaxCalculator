@@ -13,7 +13,7 @@ public class View extends JFrame {
 
     public View(ActionListener listener) {
         setTitle("Tax Calculator");
-        this.setSize(300,600);
+        this.setSize(400,600);
         initComponents(listener);
         setLayout(new GridLayout(3,1));
         setLocationRelativeTo(null);

@@ -37,8 +37,21 @@ public class Presenter implements ActionListener {
                 result = list1.get(i).equals(list2.get(i));
             }
         }
-
         return result;
+    }
+
+    public static String formatNumber(String number) {
+        String numberAux = "";
+        int cont = 0;
+        for (int i = number.length() - 1; i >= 0; i--) {
+            numberAux = number.charAt(i) + numberAux;
+            cont++;
+            if (cont == 3 && i != 0) {
+                numberAux = "." + numberAux;
+                cont = 0;
+            }
+        }
+        return numberAux;
     }
 
     @Override
@@ -65,11 +78,11 @@ public class Presenter implements ActionListener {
                 break;
             case "searchButton":
                 int commercialValue = (int) taxCalculator.searchMark(view.getMarkItem()).searchLine(view.getLineItem()).searchModel(view.getModelItem()).getCommercialValue();
-                view.setLabelValue(String.valueOf(commercialValue));
+                view.setLabelValue(formatNumber(String.valueOf(commercialValue)));
                 break;
             case "liquidateButton":
-                double finalValue = taxCalculator.calculateTotalValue(view.getMarkItem(), view.getModelItem(), view.getLineItem(), view.isTimelyPaymentSelected(), view.isVehicleTypeSelected(), view.isRegistrationInBoyacaSelected());
-                view.setTaxValue(String.valueOf(finalValue));
+                int finalValue =(int) taxCalculator.calculateTotalValue(view.getMarkItem(), view.getModelItem(), view.getLineItem(), view.isTimelyPaymentSelected(), view.isVehicleTypeSelected(), view.isRegistrationInBoyacaSelected());
+                view.setTaxValue(formatNumber(String.valueOf(finalValue)));
                 break;
                 case "cleanButton":
                     view.setLabelValue("0");
